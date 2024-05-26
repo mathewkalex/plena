@@ -1,0 +1,26 @@
+version: '3.8'
+
+services:
+  redis:
+    image: redis
+    container_name: redis
+    ports:
+      - '6379:6379'
+
+  access-key-management-service:
+    build:
+      context: ./access-key-management
+    container_name: access-key-management-service
+    ports:
+      - '3001:3001'
+    depends_on:
+      - redis
+
+  token-information-service:
+    build:
+      context: ./token-information
+    container_name: token-information-service
+    ports:
+      - '3002:3002'
+    depends_on:
+      - redis
